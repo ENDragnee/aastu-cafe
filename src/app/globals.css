@@ -61,7 +61,51 @@ body {
   * {
     @apply border-border;
   }
+  
+  html {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Add transitions to common elements */
+  button,
+  a,
+  input,
+  textarea,
+  select,
+  div {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+
+  /* Add transitions specifically for background and text colors */
+  .bg-background,
+  .bg-card,
+  .bg-popover,
+  .bg-primary,
+  .bg-secondary,
+  .bg-muted,
+  .bg-accent {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+
+  .text-foreground,
+  .text-card-foreground,
+  .text-popover-foreground,
+  .text-primary-foreground,
+  .text-secondary-foreground,
+  .text-muted-foreground,
+  .text-accent-foreground {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+
+  /* Add transitions for borders */
+  .border,
+  .border-input,
+  .border-ring {
+    @apply transition-colors duration-300 ease-in-out;
   }
 }
