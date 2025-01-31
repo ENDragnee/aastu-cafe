@@ -1,9 +1,12 @@
-import type { Metadata } from "next";
+"use client"
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,10 +18,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "AASTU Cafeteria Attendance",
-  description: "This is the AASTU Cafeteria Attendance system developed by the SAAS Founders club.",
-};
 
 export default function RootLayout({
   children,
@@ -30,15 +29,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-        >
-          <Header />
-          {children}
-          <Footer />
-        </ThemeProvider>
+        <SessionProvider> 
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+          >
+            <Header />
+                {children}
+            <Footer />
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );
