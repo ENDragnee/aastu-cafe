@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import clientPromise from '@/lib/mongodb'; // MongoDB connection
-import { verifyPassword } from './password-utils'; // For password hashing (optional)
+import { verifyPassword, hashPassword } from './password-utils'; // For password hashing (optional)
 
 export const authOptions = {
   providers: [
@@ -26,7 +26,7 @@ export const authOptions = {
           // Verify password
           const isValid = await verifyPassword(credentials.password, user.password);
           if (!isValid) {
-            throw new Error('Invalid credentials');
+            throw new Error(`Invalid credentials`);
           }
 
           // Return user object

@@ -7,7 +7,7 @@ import { useTheme } from "next-themes";
 import Logo from "@/components/ui/Logo";
 
 const role = [
-  { name: "Admin" },
+  { name: "Cafe" },
 ]
 export default function SignIn() {
   const [selectedUniversity, setSelectedUniversity] = useState("");

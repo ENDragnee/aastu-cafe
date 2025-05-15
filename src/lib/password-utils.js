@@ -1,14 +1,19 @@
-import bcrypt from 'bcrypt';
+import { hash, verify } from '@node-rs/argon2';
 
 /**
- * Hashes a plain-text password for secure storage.
+ * Hashes a plain-text password using Argon2id.
  * @param {string} password - The plain-text password to hash.
  * @returns {Promise<string>} - A hashed version of the password.
  */
 export async function hashPassword(password) {
-  const saltRounds = 10; // Adjust this value for desired hashing strength
-  const salt = await bcrypt.genSalt(saltRounds);
-  return await bcrypt.hash(password, salt);
+  const hashingConfig = {
+    memoryCost: 65536, // 64MB in KiB (64 * 1024)
+    timeCost: 3,       // Number of iterations
+    parallelism: 4,    // Degree of parallelism
+    hashLength: 32     // Hash length in bytes
+  };
+  
+  return await hash(password, hashingConfig);
 }
 
 /**
@@ -18,5 +23,12 @@ export async function hashPassword(password) {
  * @returns {Promise<boolean>} - True if the passwords match, false otherwise.
  */
 export async function verifyPassword(inputPassword, hashedPassword) {
-  return await bcrypt.compare(inputPassword, hashedPassword);
+  try {
+    return await verify(hashedPassword, inputPassword);
+  } catch {
+    return false;
+  }
 }
+
+// Example usage to hash "cafe2024"
+// hashPassword("cafe2024").then(console.log).catch(console.error);
